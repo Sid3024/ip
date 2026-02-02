@@ -1,11 +1,23 @@
 public class Sid {
+
     public static void main(String[] args) {
-        String logo = "______________________________\n"
+        Sid sid = new Sid();
+        sid.hello();
+        sid.bye();
+    }
+
+    
+    public void hello() {
+        System.out.println("______________________________\n"
                 + "Hello! I'm Sid\n"
                 + "What can I do for you?\n"
-                + "______________________________\n"
-                + " Bye. Hope to see you again soon!\n"
-                + "______________________________\n";
-        System.out.println(logo);
+                + "______________________________\n");
     }
+
+    public void bye() {
+        System.out.println("______________________________\n" +
+                " Bye. Hope to see you again soon!\n"
+                + "______________________________\n");
+    }
+
 }
