@@ -1,15 +1,13 @@
 import java.util.Scanner;
 
 public class Sid {
-    private static final int MAX_LIST_SIZE = 100;
-    private String[] myList = new String[MAX_LIST_SIZE];
-    private int mySize = 0;
+    Dialogue myDialogue = new Dialogue();
+    TaskList myTaskList = new TaskList();
 
     public static void main(String[] args) {
         Sid sid = new Sid();
         Scanner scanner = new Scanner(System.in);
         String user_input;
-        sid.hello();
         while (true) {
             user_input = scanner.nextLine();
             if (sid.decide_action(user_input)) { // returns true if userInput == "bye"
@@ -19,85 +17,70 @@ public class Sid {
     }
 
     /**
+     * runs hello() on instantiation
+     */
+    Sid() {
+        myDialogue.hello();
+    }
+
+    /**
      * decides which action the user wants (add item to list, print list, exit)
-     * @param action the action input by the user
+     * @param userInput the action input by the user
      * @return doExit tells bot to exit if userInput is "bye"
      */
-    public boolean decide_action(String action) {
+    public boolean decide_action(String userInput) {
         boolean doExit = false;
-        switch (action) {
-        case "bye":
-            bye();
+        if (userInput.equals("bye")) {
+            myDialogue.bye();
             doExit = true;
-            break;
-        case "list":
-            printMyList();;
-            break;
-        default:
-            addToList(action);
-            break;
+        } else if (userInput.equals("list")) {
+            myTaskList.printMyList();
+        } else if (userInput.startsWith("mark ")) {
+            int idxToMark = extractIntSafely(userInput);
+            if (idxToMark == -1) {
+                return doExit;
+            } else {
+                myTaskList.setMarked(idxToMark);
+            }
+        } else if (userInput.startsWith("unmark ")) {
+            int idxToUnmark = extractIntSafely(userInput);
+            if (idxToUnmark == -1) {
+                return doExit;
+            } else {
+                myTaskList.setUnmarked(idxToUnmark);
+            }
+        } else {
+            myTaskList.addToList(userInput);
         }
         return doExit;
     }
 
     /**
-     * Print out myList in expected format
+     * Extracts idx from userInput safely (without throwing exception) while printing out error for invalid userInput
+     * @param userInput the user input as a string
+     * @return the extracted int. in case of error, returns -1
      */
-    public void printMyList() {
-        System.out.println("______________________________");
-        for (int i=0;i<mySize;i++) {
-            System.out.println((i+1) + ". " + myList[i]);
+    private int extractIntSafely(String userInput) {
+        int i;
+        int intStartIdx = 0;
+        if (userInput.startsWith("mark ")) {
+            intStartIdx = 5;
+        } else if (userInput.startsWith("unmark ")) {
+            intStartIdx = 7;
+        } else {
+            assert false: "invalid extractIntSafely() call\n";
         }
-        System.out.println("______________________________");
-    }
-
-    /**
-     * Adds an item to myList
-     * @param item the string to be added to myList
-     */
-    public void addToList(String item) {
-        myList[mySize] = item;
-        mySize++;
-        printItem(item);
-    }
-
-    /**
-     * prints out item just added to list
-     * @param item the item that was just added to list
-     */
-    public void printItem(String item) {
-        System.out.println("______________________________");
-        System.out.println("added: " + item);
-        System.out.println("______________________________");
-    }
-
-    /**
-     * Prints hello message
-     */
-    public void hello() {
-        System.out.println("______________________________\n"
-                + "Hello! I'm Sid\n"
-                + "What can I do for you?\n"
-                + "______________________________");
-    }
-
-    /**
-     * Prints bye message
-     */
-    public void bye() {
-        System.out.println("______________________________\n" +
-                " Bye. Hope to see you again soon!\n"
-                + "______________________________");
-    }
-
-    /**
-     * Echoes user input
-     */
-    public void echo(String s) {
-        System.out.println("______________________________\n"
-                + s
-                + "\n"
-                + "______________________________");
+        try {
+            i = Integer.parseInt(userInput.substring(intStartIdx)) - 1; //-1 since list idx starts from 1, not 0
+        } catch (NumberFormatException e){
+            myDialogue.error(userInput, 1);
+            return -1;
+        }
+        if (i < 0 || i >= myTaskList.getMySize()) {
+            myDialogue.error(userInput, 2);
+            return -1;
+        }
+        return i;
     }
 
 }
