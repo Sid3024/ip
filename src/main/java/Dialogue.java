@@ -28,6 +28,40 @@ public class Dialogue {
                 + "______________________________");
     }
 
+    /**
+     * prints out task just added to list
+     * @param taskString String of the task that was just added to list
+     */
+    public void printTaskAdded(String taskString) {
+        System.out.println("______________________________");
+        System.out.print("added: ");
+        printTaskString(taskString);
+        System.out.println("______________________________");
+    }
+
+    public void printTaskMarked(String taskString) {
+        System.out.println("______________________________");
+        System.out.println("Nice! I've marked this task as done:");
+        printTaskString(taskString);
+        System.out.println("______________________________");
+    }
+
+    public void printTaskUnmarked(String taskString) {
+        System.out.println("______________________________");
+        System.out.println("Ok, I've marked this task as not done yet:");
+        printTaskString(taskString);
+        System.out.println("______________________________");
+    }
+
+    /**
+     * Print out myList in expected format
+     */
+    public void printMyList(TaskList taskList) {
+        System.out.println("______________________________");
+        System.out.println(taskList.toString());
+        System.out.println("______________________________");
+    }
+
     public void error(String userInput, int errorCode) {
         System.out.println("______________________________");
         switch (errorCode) {
@@ -45,6 +79,10 @@ public class Dialogue {
             break;
         }
         System.out.println("______________________________");
+    }
+
+    private void printTaskString(String taskString) {
+        System.out.println(taskString);
     }
 
     private void printUserInput(String userInput) {

@@ -3,17 +3,13 @@ public class TaskList {
     private Task[] myList = new Task[MAX_LIST_SIZE];
     private int mySize = 0;
 
-    /**
-     * Print out myList in expected format
-     */
-    public void printMyList() {
-        System.out.println("______________________________");
-        String cross;
+
+    public String toString() {
+        String s = "";
         for (int i=0;i<mySize;i++) {
-            System.out.print((i+1)+".");
-            myList[i].printTaskWithStatus();
+            s += (i+1) + "." + myList[i].toString() + "\n";
         }
-        System.out.println("______________________________");
+        return s;
     }
 
     /**
@@ -24,43 +20,19 @@ public class TaskList {
         Task newTaskObj = new Task(task);
         myList[mySize] = newTaskObj;
         mySize++;
-        printTaskAdded(newTaskObj);
-    }
-
-    /**
-     * prints out task just added to list
-     * @param task the task that was just added to list
-     */
-    public void printTaskAdded(Task task) {
-        System.out.println("______________________________");
-        System.out.print("added: ");
-        task.printTask();
-        System.out.println("______________________________");
-    }
-
-    public void printTaskMarked(int idx) {
-        System.out.println("______________________________");
-        System.out.println("Nice! I've marked this task as done:");
-        myList[idx].printTaskWithStatus();
-        System.out.println("______________________________");
-    }
-
-    public void printTaskUnmarked(int idx) {
-        System.out.println("______________________________");
-        System.out.println("Ok, I've marked this task as not done yet:");
-        myList[idx].printTaskWithStatus();
-        System.out.println("______________________________");
     }
 
 
-    public void setMarked(int idx) {
+
+
+    public String setMarked(int idx) {
         this.myList[idx].mark();
-        printTaskMarked(idx);
+        return myList[idx].toString();
     }
 
-    public void setUnmarked(int idx) {
+    public String setUnmarked(int idx) {
         this.myList[idx].unmark();
-        printTaskUnmarked(idx);
+        return myList[idx].toString();
     }
 
     public int getMySize() {

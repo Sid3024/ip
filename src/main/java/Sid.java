@@ -34,23 +34,26 @@ public class Sid {
             myDialogue.bye();
             doExit = true;
         } else if (userInput.equals("list")) {
-            myTaskList.printMyList();
+            myDialogue.printMyList(myTaskList);
         } else if (userInput.startsWith("mark ")) {
             int idxToMark = extractIntSafely(userInput);
             if (idxToMark == -1) {
                 return doExit;
             } else {
-                myTaskList.setMarked(idxToMark);
+                String taskString = myTaskList.setMarked(idxToMark);
+                myDialogue.printTaskMarked(taskString);
             }
         } else if (userInput.startsWith("unmark ")) {
             int idxToUnmark = extractIntSafely(userInput);
             if (idxToUnmark == -1) {
                 return doExit;
             } else {
-                myTaskList.setUnmarked(idxToUnmark);
+                String taskString = myTaskList.setUnmarked(idxToUnmark);
+                myDialogue.printTaskUnmarked(taskString);
             }
         } else {
             myTaskList.addToList(userInput);
+            myDialogue.printTaskAdded(userInput);
         }
         return doExit;
     }

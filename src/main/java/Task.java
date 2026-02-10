@@ -27,14 +27,10 @@ public class Task {
         isDone = false;
     }
 
-    public void printTask() {
-        System.out.println(task);
-    }
 
-    public void printTaskWithStatus() {
+    public String toString() {
         char statusIcon = getStatusIcon();
-        System.out.print("[" + statusIcon + "] ");
-        printTask();
+        return "[" + statusIcon + "] " + task;
     }
 
     private char getStatusIcon() {
