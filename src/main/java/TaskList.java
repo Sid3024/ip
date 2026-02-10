@@ -3,7 +3,7 @@ public class TaskList {
     private Task[] myList = new Task[MAX_LIST_SIZE];
     private int mySize = 0;
 
-
+    @Override
     public String toString() {
         String s = "";
         for (int i=0;i<mySize;i++) {

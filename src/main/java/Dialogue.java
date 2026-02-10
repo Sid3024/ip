@@ -1,7 +1,4 @@
 public class Dialogue {
-    /**
-     * Prints hello message
-     */
     public void hello() {
         System.out.println("______________________________\n"
                 + "Hello! I'm Sid\n"
@@ -9,18 +6,12 @@ public class Dialogue {
                 + "______________________________");
     }
 
-    /**
-     * Prints bye message
-     */
     public void bye() {
         System.out.println("______________________________\n" +
                 " Bye. Hope to see you again soon!\n"
                 + "______________________________");
     }
 
-    /**
-     * Echoes user input
-     */
     public void echo(String s) {
         System.out.println("______________________________\n"
                 + s
@@ -28,10 +19,6 @@ public class Dialogue {
                 + "______________________________");
     }
 
-    /**
-     * prints out task just added to list
-     * @param taskString String of the task that was just added to list
-     */
     public void printTaskAdded(String taskString) {
         System.out.println("______________________________");
         System.out.print("added: ");
@@ -53,15 +40,17 @@ public class Dialogue {
         System.out.println("______________________________");
     }
 
-    /**
-     * Print out myList in expected format
-     */
     public void printMyList(TaskList taskList) {
         System.out.println("______________________________");
         System.out.println(taskList.toString());
         System.out.println("______________________________");
     }
 
+    /**
+     * Print error message caused by userInput
+     * @param userInput input that caused the error
+     * @param errorCode code of error type
+     */
     public void error(String userInput, int errorCode) {
         System.out.println("______________________________");
         switch (errorCode) {

@@ -1,16 +1,16 @@
 import java.util.Scanner;
 
 public class Sid {
-    Dialogue myDialogue = new Dialogue();
-    TaskList myTaskList = new TaskList();
+    private final Dialogue myDialogue = new Dialogue();
+    private final TaskList myTaskList = new TaskList();
 
     public static void main(String[] args) {
         Sid sid = new Sid();
         Scanner scanner = new Scanner(System.in);
-        String user_input;
+        String userInput;
         while (true) {
-            user_input = scanner.nextLine();
-            if (sid.decide_action(user_input)) { // returns true if userInput == "bye"
+            userInput = scanner.nextLine();
+            if (sid.decideAction(userInput)) { // returns true if userInput == "bye"
                 break;
             }
         }
@@ -28,7 +28,7 @@ public class Sid {
      * @param userInput the action input by the user
      * @return doExit tells bot to exit if userInput is "bye"
      */
-    public boolean decide_action(String userInput) {
+    public boolean decideAction(String userInput) {
         boolean doExit = false;
         if (userInput.equals("bye")) {
             myDialogue.bye();

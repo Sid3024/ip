@@ -27,7 +27,7 @@ public class Task {
         isDone = false;
     }
 
-
+    @Override
     public String toString() {
         char statusIcon = getStatusIcon();
         return "[" + statusIcon + "] " + task;
