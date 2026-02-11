@@ -1,3 +1,9 @@
+package sid.command;
+
+import sid.task.TaskList;
+import sid.ui.Dialogue;
+
+
 public class AddCommand extends Command {
     private final String task;
     public AddCommand(String task) {

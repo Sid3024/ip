@@ -1,3 +1,11 @@
+package sid;
+
+import sid.command.Command;
+import sid.exception.SidException;
+import sid.parser.Parser;
+import sid.task.TaskList;
+import sid.ui.Dialogue;
+
 import java.util.Scanner;
 
 public class Sid {
@@ -10,7 +18,8 @@ public class Sid {
         Scanner scanner = new Scanner(System.in);
         String userInput;
         while (true) {
-            userInput = scanner.nextLine();
+            userInput = scanner.nextLine().trim();
+
             if (sid.executeAction(userInput)) { // returns true if userInput == "bye"
                 break;
             }
@@ -41,3 +50,4 @@ public class Sid {
         }
     }
 }
+

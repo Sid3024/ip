@@ -1,3 +1,7 @@
+package sid.ui;
+
+import sid.task.TaskList;
+
 public class Dialogue {
     public void hello() {
         System.out.println("______________________________\n"

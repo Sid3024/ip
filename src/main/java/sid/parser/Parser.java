@@ -1,3 +1,9 @@
+package sid.parser;
+
+import sid.command.*;
+import sid.exception.SidException;
+
+
 public class Parser {
     /**
      * Creates a Command object corresponding to the action the user wants

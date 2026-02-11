@@ -1,3 +1,9 @@
+package sid.command;
+
+import sid.exception.SidException;
+import sid.task.TaskList;
+import sid.ui.Dialogue;
+
 public class MarkCommand extends Command {
     private final int index;
 

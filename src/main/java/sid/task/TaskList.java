@@ -1,3 +1,5 @@
+package sid.task;
+
 public class TaskList {
     private static final int MAX_LIST_SIZE = 100;
     private Task[] myList = new Task[MAX_LIST_SIZE];

@@ -1,3 +1,9 @@
+package sid.command;
+
+import sid.exception.SidException;
+import sid.task.TaskList;
+import sid.ui.Dialogue;
+
 public abstract class Command {
     /**
      * Executes a command
