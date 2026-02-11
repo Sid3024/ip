@@ -47,29 +47,11 @@ public class Dialogue {
     }
 
     /**
-     * error called when user calls mark/unmark command without a valid idx arg
-     * @param userInput String of user input
-     */
-    public void invalidMarkUnmarkError(String userInput) {
-        String errorDesc = "ERROR: userInput for mark/unmark command is not of valid format";
-        error(userInput, errorDesc);
-    }
-
-    /**
-     * error called when user tries to perform an action of an index of the list that is not filled
-     * @param userInput String of user input
-     */
-    public void outOfRangeError(String userInput) {
-        String errorDesc = "ERROR: userInput indicated an index that was out of range";
-        error(userInput, errorDesc);
-    }
-
-    /**
-     * Print error message caused by userInput
-     * @param userInput input that caused the error
+     * Prints error message caused by userInput
+     * @param userInput User input that caused the error
      * @param errorDesc String of desc of error type
      */
-    private void error(String userInput, String errorDesc) {
+    public void error(String userInput, String errorDesc) {
         System.out.println("______________________________");
         System.out.println(errorDesc);
         System.out.println("User Input: " + userInput);

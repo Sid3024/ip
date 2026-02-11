@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Sid {
     private final Dialogue myDialogue = new Dialogue();
     private final TaskList myTaskList = new TaskList();
+    private final Parser myParser = new Parser();
 
     public static void main(String[] args) {
         Sid sid = new Sid();
@@ -10,80 +11,33 @@ public class Sid {
         String userInput;
         while (true) {
             userInput = scanner.nextLine();
-            if (sid.decideAction(userInput)) { // returns true if userInput == "bye"
+            if (sid.executeAction(userInput)) { // returns true if userInput == "bye"
                 break;
             }
         }
+        scanner.close();
     }
 
     /**
-     * runs hello() on instantiation
+     * Constructs Sid and prints the greeting message
      */
     Sid() {
         myDialogue.hello();
     }
 
     /**
-     * decides which action the user wants (add item to list, print list, exit)
-     * @param userInput the action input by the user
-     * @return doExit tells bot to exit if userInput is "bye"
+     * Executes action the user wants (add item to list, print list, exit)
+     * @param userInput The action input by the user
+     * @return true if program should exit after executing this action
      */
-    public boolean decideAction(String userInput) {
-        boolean doExit = false;
-        if (userInput.equals("bye")) {
-            myDialogue.bye();
-            doExit = true;
-        } else if (userInput.equals("list")) {
-            myDialogue.printMyList(myTaskList);
-        } else if (userInput.startsWith("mark ")) {
-            int idxToMark = extractIntSafely(userInput);
-            if (idxToMark == -1) {
-                return doExit;
-            } else {
-                String taskString = myTaskList.setMarked(idxToMark);
-                myDialogue.printTaskMarked(taskString);
-            }
-        } else if (userInput.startsWith("unmark ")) {
-            int idxToUnmark = extractIntSafely(userInput);
-            if (idxToUnmark == -1) {
-                return doExit;
-            } else {
-                String taskString = myTaskList.setUnmarked(idxToUnmark);
-                myDialogue.printTaskUnmarked(taskString);
-            }
-        } else {
-            myTaskList.addToList(userInput);
-            myDialogue.printTaskAdded(userInput);
-        }
-        return doExit;
-    }
-
-    /**
-     * Extracts idx from userInput safely (without throwing exception) while printing out error for invalid userInput
-     * @param userInput the user input as a string
-     * @return the extracted int. in case of error, returns -1
-     */
-    private int extractIntSafely(String userInput) {
-        int i;
-        int intStartIdx = 0;
-        if (userInput.startsWith("mark ")) {
-            intStartIdx = 5;
-        } else if (userInput.startsWith("unmark ")) {
-            intStartIdx = 7;
-        } else {
-            assert false: "invalid extractIntSafely() call\n"; //programmer error, this branch should never be reached
-        }
+    public boolean executeAction(String userInput) {
+        Command command;
         try {
-            i = Integer.parseInt(userInput.substring(intStartIdx)) - 1; //-1 since list idx starts from 1, not 0
-        } catch (NumberFormatException e){
-            myDialogue.invalidMarkUnmarkError(userInput);
-            return -1;
+            command = myParser.createCommand(userInput);
+            return command.execute(myTaskList, myDialogue);
+        } catch (SidException e) {
+            myDialogue.error(userInput, e.getMessage());
+            return false;
         }
-        if (i < 0 || i >= myTaskList.getMySize()) {
-            myDialogue.outOfRangeError(userInput);
-            return -1;
-        }
-        return i;
     }
-
 }

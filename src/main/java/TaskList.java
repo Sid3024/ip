@@ -22,9 +22,6 @@ public class TaskList {
         mySize++;
     }
 
-
-
-
     public String setMarked(int idx) {
         this.myList[idx].mark();
         return myList[idx].toString();
