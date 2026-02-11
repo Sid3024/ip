@@ -71,16 +71,16 @@ public class Sid {
         } else if (userInput.startsWith("unmark ")) {
             intStartIdx = 7;
         } else {
-            assert false: "invalid extractIntSafely() call\n";
+            assert false: "invalid extractIntSafely() call\n"; //programmer error, this branch should never be reached
         }
         try {
             i = Integer.parseInt(userInput.substring(intStartIdx)) - 1; //-1 since list idx starts from 1, not 0
         } catch (NumberFormatException e){
-            myDialogue.error(userInput, 1);
+            myDialogue.invalidMarkUnmarkError(userInput);
             return -1;
         }
         if (i < 0 || i >= myTaskList.getMySize()) {
-            myDialogue.error(userInput, 2);
+            myDialogue.outOfRangeError(userInput);
             return -1;
         }
         return i;
