@@ -18,20 +18,19 @@ public class TaskList {
      * Adds an task to myList
      * @param task the string to be added to myList
      */
-    public void addToList(String task) {
-        Task newTaskObj = new Task(task);
-        myList[mySize] = newTaskObj;
+    public void addToList(Task task) {
+        myList[mySize] = task;
         mySize++;
     }
 
-    public String setMarked(int idx) {
+    public Task setMarked(int idx) {
         this.myList[idx].mark();
-        return myList[idx].toString();
+        return myList[idx];
     }
 
-    public String setUnmarked(int idx) {
+    public Task setUnmarked(int idx) {
         this.myList[idx].unmark();
-        return myList[idx].toString();
+        return myList[idx];
     }
 
     public int getMySize() {

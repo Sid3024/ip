@@ -1,5 +1,6 @@
 package sid.ui;
 
+import sid.task.Task;
 import sid.task.TaskList;
 
 public class Dialogue {
@@ -23,30 +24,32 @@ public class Dialogue {
                 + "______________________________");
     }
 
-    public void printTaskAdded(String taskString) {
+    public void printTaskAdded(Task task, int size) {
         System.out.println("______________________________");
         System.out.print("added: ");
-        printTaskString(taskString);
+        printTaskString(task.toString());
+        printNumTasksInList(size);
         System.out.println("______________________________");
     }
 
-    public void printTaskMarked(String taskString) {
+    public void printTaskMarked(Task task) {
         System.out.println("______________________________");
         System.out.println("Nice! I've marked this task as done:");
-        printTaskString(taskString);
+        printTaskString(task.toString());
+
         System.out.println("______________________________");
     }
 
-    public void printTaskUnmarked(String taskString) {
+    public void printTaskUnmarked(Task task) {
         System.out.println("______________________________");
         System.out.println("Ok, I've marked this task as not done yet:");
-        printTaskString(taskString);
+        printTaskString(task.toString());
         System.out.println("______________________________");
     }
 
     public void printMyList(TaskList taskList) {
         System.out.println("______________________________");
-        System.out.println(taskList.toString());
+        System.out.print(taskList.toString());
         System.out.println("______________________________");
     }
 
@@ -60,6 +63,10 @@ public class Dialogue {
         System.out.println(errorDesc);
         System.out.println("User Input: " + userInput);
         System.out.println("______________________________");
+    }
+
+    private void printNumTasksInList(int size) {
+        System.out.println("You have " + size + " tasks in your list currently");
     }
 
     private void printTaskString(String taskString) {

@@ -1,6 +1,7 @@
 package sid.command;
 
 import sid.exception.SidException;
+import sid.task.Task;
 import sid.task.TaskList;
 import sid.ui.Dialogue;
 
@@ -16,8 +17,8 @@ public class UnmarkCommand extends Command {
         if (index < 0 || index >= taskList.getMySize()) {
             throw new SidException("User input indicated an index that was out of range");
         }
-        String taskString = taskList.setUnmarked(index);
-        dialogue.printTaskUnmarked(taskString);
+        Task task = taskList.setUnmarked(index);
+        dialogue.printTaskUnmarked(task);
         return false;
     }
 }
