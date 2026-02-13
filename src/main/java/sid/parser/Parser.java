@@ -40,7 +40,7 @@ public class Parser {
 
     /**
      * Extracts metadata of Deadline (task, dueAt) from userInput.
-     * Expected format: "deadline <task> /by <dueAt>.
+     * Expected format: "deadline <task> /by <dueAt>".
      * @param userInput Full raw input entered by user.
      * @return String[] of the metadata in the form {task, dueAt}.
      * @throws SidException If the input format is invalid.
@@ -67,7 +67,7 @@ public class Parser {
 
     /**
      * Extracts metadata of Event (task, startTime, endTime) from userInput.
-     * Expected format: "event <task> /from <startTime> /to <endTime>.
+     * Expected format: "event <task> /from <startTime> /to <endTime>".
      * Assumes that userInput has already been verified to be of the correct format.
      * @param userInput Full raw input entered by user.
      * @return String[] of the metadata in the form {task, startTime, endTime}.
@@ -98,8 +98,11 @@ public class Parser {
      * @param UnprocessedFlag Substring starting from 1 flag till the next flag/end of string.
      * @return Metadata as a String.
      */
-    private String extractTaskFromFlag(String UnprocessedFlag) {
+    private String extractTaskFromFlag(String UnprocessedFlag) throws SidException{
         int firstSpace = UnprocessedFlag.indexOf(' ');
+        if (firstSpace == -1) {
+            throw new SidException("Flag must be immediately followed by a space");
+        }
         return UnprocessedFlag.substring(firstSpace + 1);
     }
 
