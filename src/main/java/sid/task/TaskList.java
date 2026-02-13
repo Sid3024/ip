@@ -1,5 +1,7 @@
 package sid.task;
 
+import sid.exception.SidException;
+
 public class TaskList {
     private static final int MAX_LIST_SIZE = 100;
     private final Task[] list = new Task[MAX_LIST_SIZE];
@@ -18,7 +20,10 @@ public class TaskList {
      * Adds a task to list.
      * @param task The Task to be added to list.
      */
-    public void addToList(Task task) {
+    public void addToList(Task task) throws SidException {
+        if (isFull()) {
+            throw new SidException("Unable to add any tasks to list because list is full");
+        }
         list[size] = task;
         size++;
     }
@@ -31,6 +36,10 @@ public class TaskList {
     public Task setUnmarked(int idx) {
         this.list[idx].unmark();
         return list[idx];
+    }
+
+    public boolean isFull() {
+        return size == MAX_LIST_SIZE;
     }
 
     public int getSize() {

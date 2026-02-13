@@ -1,5 +1,6 @@
 package sid.command;
 
+import sid.exception.SidException;
 import sid.task.Task;
 import sid.task.TaskList;
 import sid.ui.Dialogue;
@@ -11,7 +12,7 @@ public class AddCommand extends Command {
         this.task = task;
     }
     @Override
-    public boolean execute(TaskList taskList, Dialogue dialogue) {
+    public boolean execute(TaskList taskList, Dialogue dialogue) throws SidException {
         taskList.addToList(task);
         dialogue.printTaskAdded(task, taskList.getSize());
         return false;
