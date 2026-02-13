@@ -20,7 +20,7 @@ public class Sid {
         while (true) {
             userInput = scanner.nextLine().trim();
 
-            if (sid.executeAction(userInput)) { // returns true if userInput == "bye"
+            if (sid.executeCommand(userInput)) { // returns true if userInput == "bye"
                 break;
             }
         }
@@ -28,18 +28,18 @@ public class Sid {
     }
 
     /**
-     * Constructs Sid and prints the greeting message
+     * Constructs Sid object and prints the greeting message.
      */
     Sid() {
         dialogue.hello();
     }
 
     /**
-     * Executes action the user wants (add item to list, print list, exit)
-     * @param userInput The action input by the user
-     * @return true if program should exit after executing this action
+     * Executes command the user wants (add item to list, print list, exit).
+     * @param userInput The command input by the user.
+     * @return true if program should exit after executing this command.
      */
-    public boolean executeAction(String userInput) {
+    public boolean executeCommand(String userInput) {
         Command command;
         try {
             command = parser.createCommand(userInput);

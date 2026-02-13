@@ -9,9 +9,9 @@ import sid.task.ToDo;
 
 public class Parser {
     /**
-     * Creates a Command object corresponding to the action the user wants
-     * @param userInput The action input by the user
-     * @return Command object corresponding to the user input
+     * Creates a Command object corresponding to the action the user wants.
+     * @param userInput The action input by the user.
+     * @return Command object corresponding to the user input.
      */
     public Command createCommand(String userInput) throws SidException {
         if (userInput.equals("bye")) {
@@ -38,31 +38,24 @@ public class Parser {
         }
     }
 
-    private String deadlineMetadataToString(String[] deadlineMetadata) {
-        return deadlineMetadata[0] + " (by: " + deadlineMetadata[1] + ")";
-    }
-
-    private String eventMetadataToString(String[] eventMetadata) {
-        return eventMetadata[0] + " (from: " + eventMetadata[1] + " to: " + eventMetadata[2] + ")";
-    }
-
-    private String extractTaskFromFlag(String UnprocessedFlag) {
-        int firstSpace = UnprocessedFlag.indexOf(' ');
-        return UnprocessedFlag.substring(firstSpace + 1);
-    }
-
-    private String[] extractEventMetadata (String userInput) throws SidException {
-        String[] parts = userInput.trim().split("/");
-        verifyEventInput(parts);
-        return new String[]{parts[0].substring(5).trim(), extractTaskFromFlag(parts[1]), extractTaskFromFlag(parts[2])};
-    }
-
+    /**
+     * Extracts metadata of Deadline (task, dueAt) from userInput.
+     * Expected format: "deadline <task> /by <dueAt>.
+     * @param userInput Full raw input entered by user.
+     * @return String[] of the metadata in the form {task, dueAt}.
+     * @throws SidException If the input format is invalid.
+     */
     private String[] extractDeadlineMetadata(String userInput) throws SidException {
         String[] parts = userInput.trim().split("/");
         verifyDeadlineInput(parts);
         return new String[]{parts[0].substring(8).trim(), extractTaskFromFlag(parts[1])};
     }
 
+    /**
+     * Verifies that userInput for a deadline task is of correct format.
+     * @param parts String[] of the deadline metadata in the form {task, dueAt}.
+     * @throws SidException If the input format is invalid.
+     */
     private void verifyDeadlineInput(String[] parts) throws SidException {
         if (parts.length != 2) {
             throw new SidException("Deadline command requires exactly 1 flag ('/by')");
@@ -72,28 +65,58 @@ public class Parser {
         }
     }
 
-    private void verifyEventInput(String[] flags) throws SidException {
-        if (flags.length != 3) {
+    /**
+     * Extracts metadata of Event (task, startTime, endTime) from userInput.
+     * Expected format: "event <task> /from <startTime> /to <endTime>.
+     * Assumes that userInput has already been verified to be of the correct format.
+     * @param userInput Full raw input entered by user.
+     * @return String[] of the metadata in the form {task, startTime, endTime}.
+     * @throws SidException If the input format is invalid.
+     */
+    private String[] extractEventMetadata (String userInput) throws SidException {
+        String[] parts = userInput.trim().split("/");
+        verifyEventInput(parts);
+        return new String[]{parts[0].substring(5).trim(), extractTaskFromFlag(parts[1]), extractTaskFromFlag(parts[2])};
+    }
+
+    /**
+     * Verifies that userInput for an event task is of correct format.
+     * @param parts String[] of the event metadata in the form {task, startTime, endTime}.
+     * @throws SidException If the input format is invalid.
+     */
+    private void verifyEventInput(String[] parts) throws SidException {
+        if (parts.length != 3) {
             throw new SidException("Event command requires exactly 2 flags in order ('/from', '/to')");
         }
-        if (!verifyFlag(flags[1], "from") || !verifyFlag(flags[2], "to")) {
+        if (!verifyFlag(parts[1], "from") || !verifyFlag(parts[2], "to")) {
             throw new SidException("Event command requires flags '/from', '/to' in order");
         }
     }
 
+    /**
+     * Extracts the relevant text (metadata) from the unprocessedFlag.
+     * @param UnprocessedFlag Substring starting from 1 flag till the next flag/end of string.
+     * @return Metadata as a String.
+     */
+    private String extractTaskFromFlag(String UnprocessedFlag) {
+        int firstSpace = UnprocessedFlag.indexOf(' ');
+        return UnprocessedFlag.substring(firstSpace + 1);
+    }
 
+    /**
+     * Verifies that the flag String is what is expected.
+     * @param unprocessedFlag Substring starting from 1 flag till the next flag/end of string.
+     * @param expectedFlag String of the expected flag.
+     * @return true if flag String is what is expected.
+     */
     private boolean verifyFlag(String unprocessedFlag, String expectedFlag) {
         return unprocessedFlag.split(" ")[0].equals(expectedFlag);
     }
 
-
-
-
-
     /**
-     * Extracts idx from userInput while throwing error for invalid userInput
-     * @param userInput The user input as a string
-     * @return The extracted int
+     * Extracts idx from userInput for mark/unmark commands while throwing error for invalid userInput.
+     * @param userInput The user input as a string.
+     * @return The extracted int.
      */
     private int extractInt(String userInput) throws SidException {
         int i;

@@ -54,9 +54,9 @@ public class Dialogue {
     }
 
     /**
-     * Prints error message caused by userInput
-     * @param userInput User input that caused the error
-     * @param errorDesc String of desc of error type
+     * Prints error message caused by userInput.
+     * @param userInput Raw user input that caused the error.
+     * @param errorDesc String of desc of error type.
      */
     public void error(String userInput, String errorDesc) {
         System.out.println("______________________________");

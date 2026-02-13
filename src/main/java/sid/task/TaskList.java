@@ -15,8 +15,8 @@ public class TaskList {
     }
 
     /**
-     * Adds an task to list
-     * @param task the Task to be added to list
+     * Adds a task to list.
+     * @param task The Task to be added to list.
      */
     public void addToList(Task task) {
         list[size] = task;
