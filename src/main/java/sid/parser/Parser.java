@@ -14,22 +14,25 @@ public class Parser {
      * @return Command object corresponding to the user input.
      */
     public Command createCommand(String userInput) throws SidException {
+        userInput = userInput.trim();
         if (userInput.equals("bye")) {
             return new ByeCommand();
         } else if (userInput.equals("list")) {
             return new ListCommand();
-        } else if (userInput.startsWith("mark ")) {
-            int idxToMark = extractInt(userInput);
+        } else if (userInput.startsWith("mark")) {
+            int idxToMark = extractInt(userInput, "mark");
             return new MarkCommand(idxToMark);
-        } else if (userInput.startsWith("unmark ")) {
-            int idxToUnmark = extractInt(userInput);
+        } else if (userInput.startsWith("unmark")) {
+            int idxToUnmark = extractInt(userInput, "unmark");
             return new UnmarkCommand(idxToUnmark);
-        } else if (userInput.startsWith("todo ")) {
-            return new AddCommand(new ToDo(userInput.substring(4).trim()));
-        } else if (userInput.startsWith("deadline ")) {
+        } else if (userInput.startsWith("todo")) {
+            verifyChunk(userInput, "todo");
+            return new AddCommand(new ToDo(extractTaskFromChunk(userInput)));
+            //return new AddCommand(new ToDo(userInput.substring(4).trim()));
+        } else if (userInput.startsWith("deadline")) {
             String[] deadlineMetadata = extractDeadlineMetadata(userInput);
             return new AddCommand(new Deadline(deadlineMetadata[0], deadlineMetadata[1]));
-        } else if (userInput.startsWith("event ")) {
+        } else if (userInput.startsWith("event")) {
             String[] eventMetadata = extractEventMetadata(userInput);
             return new AddCommand(new Event(eventMetadata[0], eventMetadata[1], eventMetadata[2]));
         }
@@ -46,9 +49,10 @@ public class Parser {
      * @throws SidException If the input format is invalid.
      */
     private String[] extractDeadlineMetadata(String userInput) throws SidException {
-        String[] parts = userInput.trim().split("/");
+        String[] parts = userInput.trim().split("/", -1);
         verifyDeadlineInput(parts);
-        return new String[]{parts[0].substring(8).trim(), extractTaskFromFlag(parts[1])};
+        return new String[]{extractTaskFromChunk(parts[0]), extractTaskFromChunk(parts[1])};
+        //return new String[]{parts[0].substring(8).trim(), extractTaskFromFlag(parts[1])};
     }
 
     /**
@@ -60,7 +64,7 @@ public class Parser {
         if (parts.length != 2) {
             throw new SidException("Deadline command requires exactly 1 flag ('/by')");
         }
-        if (!verifyFlag(parts[1], "by")) {
+        if (!verifyChunk(parts[0], "deadline") || !verifyChunk(parts[1], "by")) {
             throw new SidException("Deadline command requires flag '/by'");
         }
     }
@@ -74,9 +78,10 @@ public class Parser {
      * @throws SidException If the input format is invalid.
      */
     private String[] extractEventMetadata (String userInput) throws SidException {
-        String[] parts = userInput.trim().split("/");
+        String[] parts = userInput.trim().split("/", -1);
         verifyEventInput(parts);
-        return new String[]{parts[0].substring(5).trim(), extractTaskFromFlag(parts[1]), extractTaskFromFlag(parts[2])};
+        return new String[]{extractTaskFromChunk(parts[0]), extractTaskFromChunk(parts[1]), extractTaskFromChunk(parts[2])};
+        //return new String[]{parts[0].substring(5).trim(), extractTaskFromChunk(parts[1]), extractTaskFromChunk(parts[2])};
     }
 
     /**
@@ -88,55 +93,60 @@ public class Parser {
         if (parts.length != 3) {
             throw new SidException("Event command requires exactly 2 flags in order ('/from', '/to')");
         }
-        if (!verifyFlag(parts[1], "from") || !verifyFlag(parts[2], "to")) {
+        if (!verifyChunk(parts[0], "event") || !verifyChunk(parts[1], "from") || !verifyChunk(parts[2], "to")) {
             throw new SidException("Event command requires flags '/from', '/to' in order");
         }
     }
 
     /**
      * Extracts the relevant text (metadata) from the unprocessedFlag.
-     * @param unprocessedFlag Substring starting from 1 flag till the next flag/end of string.
+     * @param unprocessedChunk Substring starting from 1 flag till the next flag/end of string.
      * @return Metadata as a String.
      * @throws SidException If flag does not have a trailing space (' ').
      */
-    private String extractTaskFromFlag(String unprocessedFlag) throws SidException{
-        int firstSpace = unprocessedFlag.indexOf(' ');
+    private String extractTaskFromChunk(String unprocessedChunk) throws SidException {
+        int firstSpace = unprocessedChunk.indexOf(' ');
         if (firstSpace == -1) {
-            throw new SidException("Flag must be immediately followed by a space");
+            throw new SidException("'" + unprocessedChunk + "' must be immediately followed by a space");
         }
-        return unprocessedFlag.substring(firstSpace + 1);
+        return unprocessedChunk.substring(firstSpace + 1).trim();
     }
 
     /**
      * Verifies that the flag String is what is expected.
-     * @param unprocessedFlag Substring starting from 1 flag till the next flag/end of string.
-     * @param expectedFlag String of the expected flag.
+     * @param unprocessedChunk Substring starting from 1 flag till the next flag/end of string.
+     * @param expectedString String of the expected flag.
      * @return true if flag String is what is expected.
      */
-    private boolean verifyFlag(String unprocessedFlag, String expectedFlag) {
-        return unprocessedFlag.split(" ")[0].equals(expectedFlag);
+    private boolean verifyChunk(String unprocessedChunk, String expectedString) throws SidException {
+        String[] parts = unprocessedChunk.trim().split("\\s+", 2);
+        if (!parts[0].equals(expectedString)) {
+            return false;
+        }
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            throw new SidException("'" + expectedString + "' requires a non-empty description");
+        }
+        return true;
     }
 
     /**
      * Extracts idx from userInput for mark/unmark commands while throwing error for invalid userInput.
      * @param userInput The user input as a string.
+     * @param commandString String of the command.
      * @return The extracted int.
      */
-    private int extractInt(String userInput) throws SidException {
-        int i;
-        int intStartIdx = 0;
-        if (userInput.startsWith("mark ")) {
-            intStartIdx = 5;
-        } else if (userInput.startsWith("unmark ")) {
-            intStartIdx = 7;
-        } else {
-            assert false: "invalid extractIntSafely() call\n"; //programmer error, this branch should never be reached
+    private int extractInt(String userInput, String commandString) throws SidException {
+        if (commandString.length() == userInput.length()) {
+            throw new SidException(userInput + " command requires an index arg");
         }
+        if (userInput.charAt(commandString.length()) != ' ') {
+            throw new SidException(commandString + " command must be immediately followed by a space character (' ')");
+        }
+        int startIdx = commandString.length() + 1; //+1 due to space character
         try {
-            i = Integer.parseInt(userInput.substring(intStartIdx)) - 1; //-1 since list idx starts from 1, not 0
+            return Integer.parseInt(userInput.substring(startIdx)) - 1; //-1 since list idx starts from 1, not 0
         } catch (NumberFormatException e){
-            throw new SidException("User input for mark/unmark command is not of valid format");
+            throw new SidException("User input for " + commandString + " command is not of valid format");
         }
-        return i;
     }
 }
