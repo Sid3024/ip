@@ -95,15 +95,16 @@ public class Parser {
 
     /**
      * Extracts the relevant text (metadata) from the unprocessedFlag.
-     * @param UnprocessedFlag Substring starting from 1 flag till the next flag/end of string.
+     * @param unprocessedFlag Substring starting from 1 flag till the next flag/end of string.
      * @return Metadata as a String.
+     * @throws SidException If flag does not have a trailing space (' ').
      */
-    private String extractTaskFromFlag(String UnprocessedFlag) throws SidException{
-        int firstSpace = UnprocessedFlag.indexOf(' ');
+    private String extractTaskFromFlag(String unprocessedFlag) throws SidException{
+        int firstSpace = unprocessedFlag.indexOf(' ');
         if (firstSpace == -1) {
             throw new SidException("Flag must be immediately followed by a space");
         }
-        return UnprocessedFlag.substring(firstSpace + 1);
+        return unprocessedFlag.substring(firstSpace + 1);
     }
 
     /**
