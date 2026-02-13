@@ -13,7 +13,7 @@ public class AddCommand extends Command {
     @Override
     public boolean execute(TaskList taskList, Dialogue dialogue) {
         taskList.addToList(task);
-        dialogue.printTaskAdded(task, taskList.getMySize());
+        dialogue.printTaskAdded(task, taskList.getSize());
         return false;
     }
 }

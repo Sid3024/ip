@@ -9,9 +9,9 @@ import sid.ui.Dialogue;
 import java.util.Scanner;
 
 public class Sid {
-    private final Dialogue myDialogue = new Dialogue();
-    private final TaskList myTaskList = new TaskList();
-    private final Parser myParser = new Parser();
+    private final Dialogue dialogue = new Dialogue();
+    private final TaskList taskList = new TaskList();
+    private final Parser parser = new Parser();
 
     public static void main(String[] args) {
         Sid sid = new Sid();
@@ -31,7 +31,7 @@ public class Sid {
      * Constructs Sid and prints the greeting message
      */
     Sid() {
-        myDialogue.hello();
+        dialogue.hello();
     }
 
     /**
@@ -42,10 +42,10 @@ public class Sid {
     public boolean executeAction(String userInput) {
         Command command;
         try {
-            command = myParser.createCommand(userInput);
-            return command.execute(myTaskList, myDialogue);
+            command = parser.createCommand(userInput);
+            return command.execute(taskList, dialogue);
         } catch (SidException e) {
-            myDialogue.error(userInput, e.getMessage());
+            dialogue.error(userInput, e.getMessage());
             return false;
         }
     }

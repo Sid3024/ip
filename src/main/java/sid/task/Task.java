@@ -9,7 +9,6 @@ public abstract class Task {
         this.task = task;
         this.isDone = false;
         this.taskType = taskType;
-        //this.statusIcon = 'X';
     }
 
 

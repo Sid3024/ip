@@ -8,7 +8,6 @@ public class Event extends Task {
         super(event, TaskType.EVENT);
         this.startTime = startTime;
         this.endTime = endTime;
-        //this.statusIcon = 'E';
     }
 
     public String toString() {

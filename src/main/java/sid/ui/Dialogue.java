@@ -47,7 +47,7 @@ public class Dialogue {
         System.out.println("______________________________");
     }
 
-    public void printMyList(TaskList taskList) {
+    public void printList(TaskList taskList) {
         System.out.println("______________________________");
         System.out.print(taskList.toString());
         System.out.println("______________________________");
