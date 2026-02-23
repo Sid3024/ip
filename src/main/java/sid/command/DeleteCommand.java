@@ -1,0 +1,23 @@
+package sid.command;
+
+import sid.exception.SidException;
+import sid.task.Task;
+import sid.task.TaskList;
+import sid.ui.Dialogue;
+
+
+public class DeleteCommand extends Command {
+    private final int index;
+    public DeleteCommand(int index) {
+        this.index = index;
+    }
+    @Override
+    public boolean execute(TaskList taskList, Dialogue dialogue) throws SidException {
+        if (index < 0 || index >= taskList.getSize()) {
+            throw new SidException("User input indicated an index that was out of range");
+        }
+        Task task = taskList.deleteFromList(index);
+        dialogue.printTaskDeleted(task, taskList.getSize());
+        return false;
+    }
+}

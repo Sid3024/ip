@@ -28,15 +28,16 @@ public class Parser {
         } else if (userInput.startsWith("todo")) {
             verifyChunk(userInput, "todo");
             return new AddCommand(new ToDo(extractTaskFromChunk(userInput)));
-            //return new AddCommand(new ToDo(userInput.substring(4).trim()));
         } else if (userInput.startsWith("deadline")) {
             String[] deadlineMetadata = extractDeadlineMetadata(userInput);
             return new AddCommand(new Deadline(deadlineMetadata[0], deadlineMetadata[1]));
         } else if (userInput.startsWith("event")) {
             String[] eventMetadata = extractEventMetadata(userInput);
             return new AddCommand(new Event(eventMetadata[0], eventMetadata[1], eventMetadata[2]));
-        }
-        else {
+        } else if (userInput.startsWith("delete")) {
+            int idxToDelete = extractInt(userInput, "delete");
+            return new DeleteCommand(idxToDelete);
+        } else {
             throw new SidException("User input is of invalid format");
         }
     }
@@ -52,7 +53,6 @@ public class Parser {
         String[] parts = userInput.trim().split("/", -1);
         verifyDeadlineInput(parts);
         return new String[]{extractTaskFromChunk(parts[0]), extractTaskFromChunk(parts[1])};
-        //return new String[]{parts[0].substring(8).trim(), extractTaskFromFlag(parts[1])};
     }
 
     /**
@@ -81,7 +81,6 @@ public class Parser {
         String[] parts = userInput.trim().split("/", -1);
         verifyEventInput(parts);
         return new String[]{extractTaskFromChunk(parts[0]), extractTaskFromChunk(parts[1]), extractTaskFromChunk(parts[2])};
-        //return new String[]{parts[0].substring(5).trim(), extractTaskFromChunk(parts[1]), extractTaskFromChunk(parts[2])};
     }
 
     /**
@@ -130,7 +129,7 @@ public class Parser {
     }
 
     /**
-     * Extracts idx from userInput for mark/unmark commands while throwing error for invalid userInput.
+     * Extracts idx from userInput for mark/unmark/delete commands while throwing error for invalid userInput.
      * @param userInput The user input as a string.
      * @param commandString String of the command.
      * @return The extracted int.

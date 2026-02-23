@@ -32,6 +32,14 @@ public class Dialogue {
         System.out.println("______________________________");
     }
 
+    public void printTaskDeleted(Task task, int size) {
+        System.out.println("______________________________");
+        System.out.print("deleted: ");
+        printTaskString(task.toString());
+        printNumTasksInList(size);
+        System.out.println("______________________________");
+    }
+
     public void printTaskMarked(Task task) {
         System.out.println("______________________________");
         System.out.println("Nice! I've marked this task as done:");
