@@ -8,6 +8,7 @@ import sid.ui.Dialogue;
 
 public class AddCommand extends Command {
     private final Task task;
+
     public AddCommand(Task task) {
         this.task = task;
     }
@@ -16,5 +17,10 @@ public class AddCommand extends Command {
         taskList.addToList(task);
         dialogue.printTaskAdded(task, taskList.getSize());
         return false;
+    }
+
+    @Override
+    public boolean requiresSave() {
+        return true;
     }
 }

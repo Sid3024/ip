@@ -43,4 +43,8 @@ public abstract class Task {
     }
 
     public abstract char getTypeIcon();
+
+    public String getFileString() {
+        return getTypeIcon() + " | " + getStatusIcon() + " | " + task;
+    }
 }

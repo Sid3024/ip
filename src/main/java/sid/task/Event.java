@@ -26,4 +26,9 @@ public class Event extends Task {
     public char getTypeIcon() {
         return 'E';
     }
+
+    @Override
+    public String getFileString() {
+        return super.getFileString() + " | " + startTime + " | " + endTime;
+    }
 }

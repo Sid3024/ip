@@ -9,4 +9,9 @@ public class ListCommand extends Command {
         dialogue.printList(taskList);
         return false;
     }
+
+    @Override
+    public boolean requiresSave() {
+        return false;
+    }
 }

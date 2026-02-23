@@ -19,4 +19,10 @@ public class Deadline extends Task {
     public char getTypeIcon() {
         return 'D';
     }
+
+    @Override
+    public String getFileString() {
+        return super.getFileString() + " | " + dueAt;
+    }
+
 }

@@ -53,4 +53,8 @@ public class TaskList {
     public int getMaxListSize() {
         return MAX_LIST_SIZE;
     }
+
+    public Task get(int idx) {
+        return list[idx];
+    }
 }

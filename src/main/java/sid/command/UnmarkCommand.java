@@ -21,4 +21,9 @@ public class UnmarkCommand extends Command {
         dialogue.printTaskUnmarked(task);
         return false;
     }
+
+    @Override
+    public boolean requiresSave() {
+        return true;
+    }
 }

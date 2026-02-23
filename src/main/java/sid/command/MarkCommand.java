@@ -22,4 +22,9 @@ public class MarkCommand extends Command {
         return false;
     }
 
+    @Override
+    public boolean requiresSave() {
+        return true;
+    }
+
 }
