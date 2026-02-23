@@ -5,6 +5,8 @@ import sid.task.TaskList;
 import sid.ui.Dialogue;
 
 public abstract class Command {
+    public abstract boolean requiresSave();
+
     /**
      * Executes a command.
      * @param taskList The current taskList.

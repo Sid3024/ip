@@ -9,4 +9,9 @@ public class ByeCommand extends Command {
         dialogue.bye();
         return true;
     }
+
+    @Override
+    public boolean requiresSave() {
+        return false;
+    }
 }
