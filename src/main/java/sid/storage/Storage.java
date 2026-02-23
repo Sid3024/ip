@@ -14,6 +14,10 @@ public class Storage {
         filePath = FILE_PATH;
     }
 
+    /**
+     * Verifies that file (and parent folders) exist, and if not, creates them.
+     * @throws SidException Throws when file (and/or parent folders) do not exist and unable to create it/them.
+     */
     public void ensureFileExists() throws SidException {
         try {
             File file = new File(filePath);
@@ -28,6 +32,11 @@ public class Storage {
 
     }
 
+    /**
+     * Saves current taskList to a text file.
+     * @param taskList List to be saved.
+     * @throws SidException Throws when unable to write to file.
+     */
     public void saveTaskList(TaskList taskList) throws SidException {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
@@ -41,9 +50,13 @@ public class Storage {
         } catch (IOException e) {
             throw new SidException("Unable to save list to hard disk, due to error: " + e);
         }
-
     }
 
+    /**
+     * Loads taskList from text file.
+     * @param taskList The taskList the data is to be loaded into.
+     * @throws SidException Throws when unable to retrieve data from file or data is of the wrong format.
+     */
     public void loadTaskList(TaskList taskList) throws SidException {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
@@ -61,6 +74,12 @@ public class Storage {
 
     }
 
+    /**
+     * Creates a task object that corresponds to parameters specified in the String input.
+     * @param line String input that specifies the parameters of the task object to be created.
+     * @return Returns the task object created.
+     * @throws SidException Throws when the String input is not of the expected format.
+     */
     private Task parseLine(String line) throws SidException {
         String[] parts = line.split("\\s*\\|\\s*");
         TaskType taskType = TaskType.findTaskType(parts[0]);
@@ -106,6 +125,12 @@ public class Storage {
 
     }
 
+    /**
+     * Marks task of object if the object is done.
+     * @param task Task object to be marked if needed.
+     * @param icon Substring of input line that specifies whether task is done.
+     * @throws SidException Throws if icon is not of expected format.
+     */
     private void markTaskIfDone(Task task, String icon) throws SidException {
         if (icon.equals("X")) {
             task.mark();
