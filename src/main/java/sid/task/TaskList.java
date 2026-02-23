@@ -51,4 +51,8 @@ public class TaskList {
         this.size = size;
     }
 
+    public Task get(int idx) {
+        return list.get(idx);
+    }
+
 }
