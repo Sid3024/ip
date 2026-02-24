@@ -20,4 +20,9 @@ public class DeleteCommand extends Command {
         dialogue.printTaskDeleted(task, taskList.getSize());
         return false;
     }
+
+    @Override
+    public boolean requiresSave() {
+        return true;
+    }
 }
