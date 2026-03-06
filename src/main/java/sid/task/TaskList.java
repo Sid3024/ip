@@ -18,6 +18,17 @@ public class TaskList {
         return s;
     }
 
+
+    public ArrayList<Task> findTasks(String substring) {
+        ArrayList<Task> tasks = new ArrayList<>();
+        for (Task task : list) {
+            if (task.containsSubstring(substring)) {
+                tasks.add(task);
+            }
+        }
+        return tasks;
+    }
+
     public Task deleteFromList(int idx) {
         size--;
         return list.remove(idx);
