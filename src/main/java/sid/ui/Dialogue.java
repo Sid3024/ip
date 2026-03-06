@@ -3,6 +3,8 @@ package sid.ui;
 import sid.task.Task;
 import sid.task.TaskList;
 
+import java.util.ArrayList;
+
 public class Dialogue {
     public void hello() {
         System.out.println("______________________________\n"
@@ -55,9 +57,25 @@ public class Dialogue {
         System.out.println("______________________________");
     }
 
+    /**
+     * Prints out the full list of tasks.
+     * @param taskList taskList object containing all tasks to be printed out.
+     */
     public void printList(TaskList taskList) {
         System.out.println("______________________________");
         System.out.print(taskList.toString());
+        System.out.println("______________________________");
+    }
+
+    /**
+     * Prints out only a sub list of tasks.
+     * @param tasks ArrayList of tasks to be printed out.
+     */
+    public void printSubList(ArrayList<Task> tasks) {
+        System.out.println("______________________________");
+        for (int i=0;i<tasks.size();i++) {
+            System.out.println((i+1) + ". " + tasks.get(i).toString());
+        }
         System.out.println("______________________________");
     }
 

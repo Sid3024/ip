@@ -27,7 +27,7 @@ public class Parser {
             return new UnmarkCommand(idxToUnmark);
         } else if (userInput.startsWith("todo")) {
             verifyChunk(userInput, "todo");
-            return new AddCommand(new ToDo(extractTaskFromChunk(userInput)));
+            return new AddCommand(new ToDo(extractMetadataFromChunk(userInput)));
         } else if (userInput.startsWith("deadline")) {
             String[] deadlineMetadata = extractDeadlineMetadata(userInput);
             return new AddCommand(new Deadline(deadlineMetadata[0], deadlineMetadata[1]));
@@ -37,6 +37,9 @@ public class Parser {
         } else if (userInput.startsWith("delete")) {
             int idxToDelete = extractInt(userInput, "delete");
             return new DeleteCommand(idxToDelete);
+        } else if (userInput.startsWith("find")) {
+            verifyChunk(userInput, "find");
+            return new FindCommand(extractMetadataFromChunk(userInput));
         } else {
             throw new SidException("User input is of invalid format");
         }
@@ -52,7 +55,7 @@ public class Parser {
     private String[] extractDeadlineMetadata(String userInput) throws SidException {
         String[] parts = userInput.trim().split("/", -1);
         verifyDeadlineInput(parts);
-        return new String[]{extractTaskFromChunk(parts[0]), extractTaskFromChunk(parts[1])};
+        return new String[]{extractMetadataFromChunk(parts[0]), extractMetadataFromChunk(parts[1])};
     }
 
     /**
@@ -80,7 +83,7 @@ public class Parser {
     private String[] extractEventMetadata (String userInput) throws SidException {
         String[] parts = userInput.trim().split("/", -1);
         verifyEventInput(parts);
-        return new String[]{extractTaskFromChunk(parts[0]), extractTaskFromChunk(parts[1]), extractTaskFromChunk(parts[2])};
+        return new String[]{extractMetadataFromChunk(parts[0]), extractMetadataFromChunk(parts[1]), extractMetadataFromChunk(parts[2])};
     }
 
     /**
@@ -98,12 +101,12 @@ public class Parser {
     }
 
     /**
-     * Extracts the relevant text (metadata) from the unprocessedFlag.
-     * @param unprocessedChunk Substring starting from 1 flag till the next flag/end of string.
+     * Extracts the relevant text (metadata) from the unprocessedCommand/Flag.
+     * @param unprocessedChunk Substring starting from 1 command/flag till the next flag/end of string.
      * @return Metadata as a String.
      * @throws SidException If flag does not have a trailing space (' ').
      */
-    private String extractTaskFromChunk(String unprocessedChunk) throws SidException {
+    private String extractMetadataFromChunk(String unprocessedChunk) throws SidException {
         int firstSpace = unprocessedChunk.indexOf(' ');
         if (firstSpace == -1) {
             throw new SidException("'" + unprocessedChunk + "' must be immediately followed by a space");

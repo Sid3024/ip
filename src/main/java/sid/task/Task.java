@@ -11,7 +11,9 @@ public abstract class Task {
         this.taskType = taskType;
     }
 
-
+    public boolean containsSubstring(String substring) {
+        return task.contains(substring);
+    }
 
     public String getTask() {
         return task;
