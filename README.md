@@ -195,6 +195,7 @@ ______________________________
 ```
 
 ## Command Summary Table
+
 | Action | Format |
 |------|------|
 | Add to do task | `todo DESCRIPTION` |
