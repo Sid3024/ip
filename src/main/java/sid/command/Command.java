@@ -4,7 +4,14 @@ import sid.exception.SidException;
 import sid.task.TaskList;
 import sid.ui.Dialogue;
 
+/**
+ * Represents a command that can be executed by the Sid Chatbot.
+ */
 public abstract class Command {
+    /**
+     * Returns a boolean indicating whether the execution of this command alters the list (and hence list must be saved).
+     * @return true if the list has been altered/must be saved again, false otherwise.
+     */
     public abstract boolean requiresSave();
 
     /**

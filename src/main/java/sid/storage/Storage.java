@@ -5,11 +5,18 @@ import sid.task.*;
 
 import java.io.*;
 
-import static sid.task.TaskType.DEADLINE;
-
+/**
+ * Stores list on hard drive.
+ * Loads list when program starts up.
+ * Saves list whenever it is modified.
+ */
 public class Storage {
     private static String filePath;
 
+    /**
+     * Creates a Storage object.W
+     * @param FILE_PATH File path to store the program data (ie the list).
+     */
     public Storage(String FILE_PATH) {
         filePath = FILE_PATH;
     }
