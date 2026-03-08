@@ -19,7 +19,7 @@ public class TaskList {
     public String toString() {
         String s = "";
         for (int i = 0; i < size; i++) {
-            s += (i+1) + "." + list.get(i).toString() + "\n";
+            s += (i+1) + ". " + list.get(i).toString() + "\n";
         }
         return s;
     }
