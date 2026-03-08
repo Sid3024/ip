@@ -10,6 +10,10 @@ import sid.ui.Dialogue;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Main class of the Sid Chatbot.
+ * Handles program startup and general execution flow.
+ */
 public class Sid {
     private final Dialogue dialogue = new Dialogue();
     private final TaskList taskList = new TaskList();
@@ -33,9 +37,9 @@ public class Sid {
     }
 
     /**
-     * Constructs Sid object and prints the greeting message.
+     * Constructs Sid object, loads existing data and prints the greeting message.
      */
-    Sid() {
+    public Sid() {
         try {
             storage.ensureFileExists();
             storage.loadTaskList(taskList);

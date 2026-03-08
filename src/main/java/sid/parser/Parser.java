@@ -6,7 +6,11 @@ import sid.task.Deadline;
 import sid.task.Event;
 import sid.task.ToDo;
 
-
+/**
+ * Parses user input for metadata.
+ * Validates formatting of user input.
+ * Routes user input to the appropriate command.
+ */
 public class Parser {
     /**
      * Creates a Command object corresponding to the action the user wants.

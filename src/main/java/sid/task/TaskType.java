@@ -15,6 +15,12 @@ public enum TaskType {
         return code;
     }
 
+    /**
+     * Returns task type
+     * @param code
+     * @return
+     * @throws IllegalArgumentException
+     */
     public static TaskType findTaskType(String code) throws IllegalArgumentException {
         for (TaskType t : values()) {
             if (t.code.equals(code)) {
