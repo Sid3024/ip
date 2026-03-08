@@ -1,24 +1,26 @@
-# Sid Chatbot user guide
+# Sid Chatbot User Guide
 Sid is a chatbot that helps users keep track of their daily tasks. It includes features such as adding and deleting tasks, listing and automatically saving their tasks, marking their tasks and done/not done, and keyword based searching for their tasks.
+
 **Note that this chatbot requires java 17 to run**
 
 # Getting started
 ## Steps to launch program
-1. Download the jar file from this github page under releases.
-2. Copy the jar file to a folder of your choice.
-3. Open a terminal and go to that folder.
-4. Run `java -jar ip.jar`
-5. The chatbot will start running. Type in commands to perform actions
+1. Ensure that you have java 17 installed on your computer.
+2. Download the latest `ip.jar` file from the **Releases** page of this repository.
+3. Copy the jar file to a folder of your choice.
+4. Open a terminal and go to that folder.
+5. Run `java -jar ip.jar`
+6. The chatbot will start running. Type in commands to perform actions.
 
 # Features
 ## Overview
 This chatbot enables features including adding and deleting tasks from the list, marking and unmarking tasks as done, listing all tasks or searching for a subset of tasks (keyword based). As this is a CLI program, all features are accessed via commands. 
 
 ## Auto Saving
-This chatbot automatically saves the list of tasks in a text file at `data/sid.txt`. The list is automatically loaded upon program startup, and re-saved every time any action that modifies the list is made.
+This chatbot automatically saves the list of tasks in a text file at `data/sid.txt` (this file is created automatically by the chatbot). The list is automatically loaded upon program startup, and re-saved every time any action that modifies the list is made.
 
 ## Commands
-### Guidelines
+## Guidelines
 1. Ensure you follow the commands exactly, such as spelling command words and flags correctly, do not use capital letters for the command words and flags, and use the correct flags and in the correct order for appropriate commands.
 2. Ensure you give an appropriate input for command words and flags that require one; do not give an empty input.
 3. If you give a command of the wrong format, an error message will be displayed, showing both your input and an explanation of why its format is incorrect.
