@@ -11,15 +11,19 @@ public enum TaskType {
         this.code = code;
     }
 
+    /**
+     * Returns the char representing the task type.
+     * @return The char representing the task type.
+     */
     public String getCode() {
         return code;
     }
 
     /**
-     * Returns task type
-     * @param code
-     * @return
-     * @throws IllegalArgumentException
+     * Finds and returns the task type of a specific code.
+     * @param code The char representing the task type.
+     * @return The task type of the input code.
+     * @throws IllegalArgumentException If the code does not represent any task type.
      */
     public static TaskType findTaskType(String code) throws IllegalArgumentException {
         for (TaskType t : values()) {
